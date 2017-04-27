@@ -1,4 +1,4 @@
-THEME_Fordson
+Easy Enrollment Plugin
 ===========
 
 # Easy Enrollment Plugin
