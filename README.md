@@ -1,7 +1,7 @@
 THEME_Fordson
 ===========
 
-#Easy Enrollment Plugin
+# Easy Enrollment Plugin
 
 The Easy Enrollment plugin generates a 6 digit code for every course and group in your Moodle site.  Once activated on your course you can visit the Easy Enrollment Settings page and see all of your enrollment codes.  This plugin will also generate QR codes which can be downloaded and printed to use with younger students or in print materials.  Upon activition of the Easy Enrollment plugin the Fordson Moodle Theme will display all the necessary forms on the homepage so that students can enter enrollment codes and instantly be taken to the corresponding course.  
 
@@ -11,7 +11,7 @@ Dearborn Public Schools is a K-12 school district in Dearborn, Michigan.  We ser
 
 NOTE: While this can be made to work with any theme the only theme we will officially support is Fordson.  Adding the enrollment form and other functionality needed for other themes would require hacking their code to make the form appear on the homepage.  There are many themes out there and they all do things a bit differently.  We only use one theme and that is Fordson.
 
-##Instructions Github
+## Instructions Github
 * Download from Github and unzip
 * Rename folder to -  easy
 * FTP or place "easy" folder into moodleroot/enrol/
@@ -20,5 +20,5 @@ NOTE: While this can be made to work with any theme the only theme we will offic
 * With the plugin installed and activated you must add it to any pre-existing courses as an enrollment method at the course level.
 * In an individual course, on the course enrollment method page for easy enrollment you can click on Settings and it will display all enrollment codes.
 
-##Initial Release
+## Initial Release
 * This is the first release.
