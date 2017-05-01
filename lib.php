@@ -47,7 +47,6 @@ class enrol_easy_plugin extends enrol_plugin {
                 'enrol_easy_qr' => $enrol_easy_qr
             ),
             'component' => array(
-                'font_awesome' => new moodle_url('/enrol/easy/css/font-awesome.min.css'),
                 'main_javascript' => new moodle_url('/enrol/easy/js/enrol_easy.js'),
                 'jquery' => new moodle_url('/enrol/easy/js/jquery-3.2.0.min.js'),
   
@@ -203,12 +202,10 @@ class enrol_easy_plugin extends enrol_plugin {
             $jquery_url = new moodle_url('/enrol/easy/js/jquery-3.2.0.min.js');
             $qrcode_url = new moodle_url('/enrol/easy/js/jquery.qrcode.min.js');
             $js_url = new moodle_url('/enrol/easy/js/enrol_easy.js');
-            $fa_url = new moodle_url('/enrol/easy/css/font-awesome.min.css');
 
             $mform->addElement('html', '<script src="' . $jquery_url . '"></script>');
             $mform->addElement('html', '<script src="' . $qrcode_url . '"></script>');
             $mform->addElement('html', '<script src="' . $js_url . '"></script>');
-            $mform->addElement('html', '<link rel="stylesheet" href="' . $fa_url . '">');
         }
 
     }

@@ -17,5 +17,10 @@ NOTE: While this can be made to work with any theme the only theme we will offic
 * With the plugin installed and activated you must add it to any pre-existing courses as an enrollment method at the course level.
 * In an individual course, on the course enrollment method page for easy enrollment you can click on Settings and it will display all enrollment codes.
 
+
+## Version 1.0
+* Removed font-awesome includes since Fordson for Moodle 3.2 and Moodle 3.3 have the font-awesome support included. If you intend to use this outside of Fordson you must include Font-awesome with your theme.
+* Required Fordson theme version 1.4.4 to ensure users can see how to fully implement the plugin which requires the front-page enrollment form and other integrations to be useful.  The plugin by itself is fully functional but requires editing theme files to work as smoothly as seen in videos with the Fordson theme.
+
 ## Initial Release
 * This is the first release.
