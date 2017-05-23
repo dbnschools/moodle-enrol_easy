@@ -48,6 +48,10 @@ $string['qrenabled'] = 'Enable Enrol via QR Codes';
 $string['qrenableddesc'] = 'Enable Enrol via QR Codes';
 
 $string['easy:unenrolself'] = 'Unenroll from course';
+$string['easy:config'] = 'Configure Easy Enrollment instances';
+$string['easy:delete'] = 'Delete Easy Enrollment instances';
+$string['easy:manage'] = 'Manage Easy Enrollment instances';
+$string['easy:unenrol'] = 'Unenrol from Easy Enrollment instances';
 $string['unenrolselfconfirm'] = 'Do you really want to unenrol yourself from course "{$a}"?';
 
 $string['error_disabled_global'] = 'Easy enrollment is disabled site-wide.';

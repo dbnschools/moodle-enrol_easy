@@ -39,7 +39,7 @@ $capabilities = array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
-            'admin' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
         )
     ),
 
