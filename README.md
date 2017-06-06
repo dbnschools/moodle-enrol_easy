@@ -1,6 +1,6 @@
 Easy Enrollment Plugin
 ===========
-The Easy Enrollment plugin generates a 6 digit code for every course and group in your Moodle site.  Once activated on your course you can visit the Easy Enrollment Settings page and see all of your enrollment codes.  This plugin will also generate QR codes which can be downloaded and printed to use with younger students or in print materials.  Upon activition of the Easy Enrollment plugin the Fordson Moodle Theme will display all the necessary forms on the homepage so that students can enter enrollment codes and instantly be taken to the corresponding course.  
+The Easy Enrollment plugin generates a 6 digit code for every course and group in your Moodle site.  Once activated on your course you can visit the Easy Enrollment Settings page and see all of your enrollment codes.  This plugin will also generate QR codes which can be downloaded and printed to use with younger students or in print materials.  Upon activation of the Easy Enrollment plugin the Fordson Moodle Theme will display all the necessary forms on the homepage so that students can enter enrollment codes and instantly be taken to the corresponding course.  
 
 The QR Code reader requires SSL/HTTPS in order to function.  If you do not have SSL then disable the QR code option from the Easy Enrollment settings page.
 
