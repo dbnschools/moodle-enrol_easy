@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Allows course enrolment via a simple text code.
+ * Basit bir kod ile derslere hızlı kayıt olmanızı sağlar.
  *
  * @package   enrol_easy
  * @copyright 2017 Dearborn Public Schools
@@ -22,7 +22,7 @@
  */
 $string['pluginname'] = 'Easy enrollments';
 $string['pluginname_desc'] = 'Derslere kolay kayıt olmayı sağlayan bir eklentidir.';
-$string['enrolform_course_code'] = 'Kurs Kayıt Kodu';
+$string['enrolform_course_code'] = 'Hızlı Kayıt Kodu';
 $string['enrolform_submit'] = 'Kayıt Ol';
 $string['enrolform_heading'] = 'Bir derse kayıt ol';
 $string['enrolform_pagetitle'] = 'Bir derse kayıt ol';
