@@ -24,12 +24,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2017052300;
-$plugin->release  = 'v 1.1';
-$plugin->requires  = 2016010100;
+$plugin->version   = 2018051500;
+$plugin->release  = 'v 1.2';
+$plugin->requires  = 2018051700;
 $plugin->cron      = 0;
 $plugin->component = 'enrol_easy';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->dependencies = array(
-    'theme_fordson'  => 2017042700,
+    'theme_fordson'  => 2018051400,
 );

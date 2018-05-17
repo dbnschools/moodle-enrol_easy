@@ -17,6 +17,9 @@ NOTE: While this can be made to work with any theme the only theme we will offic
 * With the plugin installed and activated you must add it to any pre-existing courses as an enrollment method at the course level.
 * In an individual course, on the course enrollment method page for easy enrollment you can click on Settings and it will display all enrollment codes.
 
+## Version 1.2
+* Moodle 3.5 version.  Only compatible with Moodle 3.5.  Do not use this version on anything other than Moodle 3.5.  Must be using Fordson 3.5.  
+
 ## Version 1.1
 * Fixed missing language strings
 

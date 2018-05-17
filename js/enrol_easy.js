@@ -23,7 +23,7 @@ function main() {
 
                     $(e).parent().addClass('input-group');
                     $(e).parent().css({'max-width': '15em'});
-                    var qr_button = $('<div class="input-group-addon qr-button"><a href="" style="color: #55595c;"><i class="fa fa-qrcode" aria-hidden="true"></i></a></div>');
+                    var qr_button = $('<div class="btn btn-secondary qr-input-group-addon qr-button"><a href="" style="color: #55595c;"><i class="fa fa-qrcode" aria-hidden="true"></i></a></div>');
                     $(e).after(qr_button);
 
                     var qr_button_text = $(qr_button).find('a');
