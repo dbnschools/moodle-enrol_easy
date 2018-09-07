@@ -131,7 +131,15 @@ class enrol_easy_plugin extends enrol_plugin {
             $allcodes[] = $c;
         }
 
-        $code = $DB->get_record('enrol_easy', array('course_id' => $COURSE->id, 'group_id' => null));
+        $code = $DB->get_records('enrol_easy', array('course_id' => $COURSE->id, 'group_id' => null));
+
+        if ($code && (count($code) > 1)) {
+            $DB->delete_records('enrol_easy', array('course_id' => $COURSE->id, 'group_id' => null));
+            $code = NULL;
+        }
+        else {
+            $code = array_pop($code);
+        }
 
         if (!$code) {
             $code = randomstring(6);
@@ -162,7 +170,20 @@ class enrol_easy_plugin extends enrol_plugin {
 
         foreach ($groups as $group) {
 
-            $code = $DB->get_record('enrol_easy', array('group_id' => $group->id));
+            $code = $DB->get_records('enrol_easy', array('group_id' => $group->id));
+
+            if ($code && (count($code) > 1)) {
+                $DB->delete_records('enrol_easy', array('course_id' => $COURSE->id, 'group_id' => $group->id));
+                $code = NULL;
+            }
+            else {
+                $code = array_pop($code);
+            }
+
+            if ($code && $code->course_id != $COURSE->id) {
+                $DB->delete_records('enrol_easy', array('enrolmentcode' => $code->enrolmentcode));
+                $code = NULL;
+            }
 
             if (!$code) {
                 $code = randomstring(6);

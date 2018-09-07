@@ -26,7 +26,7 @@
 $string['pluginname'] = 'Easy enrollments';
 $string['pluginname_desc'] = 'Allows easy enrollment via a text code.';
 
-$string['enrolform_course_code'] = 'Course Code';
+$string['enrolform_course_code'] = 'Enrollment Code';
 $string['enrolform_submit'] = 'Enroll';
 $string['enrolform_heading'] = 'Enroll in a Course';
 $string['enrolform_pagetitle'] = 'Enroll in a Course';
