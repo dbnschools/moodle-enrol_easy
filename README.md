@@ -17,10 +17,10 @@ NOTE: While this can be made to work with any theme the only theme we will offic
 * With the plugin installed and activated you must add it to any pre-existing courses as an enrollment method at the course level.
 * In an individual course, on the course enrollment method page for easy enrollment you can click on Settings and it will display all enrollment codes.
 
-## Version 1.4
-* Added additional checks to ensure students are enrolled properly.
+## Version 1.5
+* Fixed issues with changes to Google Chrome and webcams for the QR Code reader
 
-## Version 1.3
+## Version 1.2
 * Fixed language string to be consistent with "enrollment code" and not "course code".
 
 ## Version 1.2
