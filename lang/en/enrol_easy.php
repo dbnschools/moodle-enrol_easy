@@ -47,6 +47,9 @@ $string['regenerate_codes_help'] = 'Check this and click "Save changes" to re-cr
 $string['qrenabled'] = 'Enable Enrol via QR Codes';
 $string['qrenableddesc'] = 'Enable Enrol via QR Codes';
 
+$string['showqronmobile'] = 'Enable QR Code Reader on Mobile';
+$string['showqronmobiledesc'] = 'Enable Enrol via QR Codes on mobile devices. May not work on all mobile browsers.  Preferred use of QR codes is in the Chrome browser and on a desktop, laptop, or Chromebook.';
+
 $string['easy:unenrolself'] = 'Unenroll from course';
 $string['easy:config'] = 'Configure Easy Enrollment instances';
 $string['easy:delete'] = 'Delete Easy Enrollment instances';

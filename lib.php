@@ -52,7 +52,7 @@ class enrol_easy_plugin extends enrol_plugin {
   
             ),
             'config' => array(
-                'qrenabled' => !isMobile() && $this->get_config('qrenabled')
+                'qrenabled' => $this->get_config('qrenabled') && ($this->get_config('showqronmobile') || !isMobile()),
             ),
             'lang' => array(
                 'enrolform_course_code' => get_string('enrolform_course_code', 'enrol_easy'),

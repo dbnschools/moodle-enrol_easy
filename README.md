@@ -17,6 +17,9 @@ NOTE: While this can be made to work with any theme the only theme we will offic
 * With the plugin installed and activated you must add it to any pre-existing courses as an enrollment method at the course level.
 * In an individual course, on the course enrollment method page for easy enrollment you can click on Settings and it will display all enrollment codes.
 
+## Version 1.6
+* Added option to show or hide the QR Code reader on mobile devices.  This might not work on every device.  We only test on Google Chrome.
+
 ## Version 1.5
 * Fixed issues with changes to Google Chrome and webcams for the QR Code reader
 

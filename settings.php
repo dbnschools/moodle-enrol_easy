@@ -38,4 +38,7 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('enrol_easy/qrenabled',
         get_string('qrenabled', 'enrol_easy'), null, 1));
 
+    $settings->add(new admin_setting_configcheckbox('enrol_easy/showqronmobile',
+        get_string('showqronmobile', 'enrol_easy'), get_string('showqronmobiledesc', 'enrol_easy'), 0));
+
 }
