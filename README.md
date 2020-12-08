@@ -17,6 +17,9 @@ NOTE: While this can be made to work with any theme the only theme we will offic
 * With the plugin installed and activated you must add it to any pre-existing courses as an enrollment method at the course level.
 * In an individual course, on the course enrollment method page for easy enrollment you can click on Settings and it will display all enrollment codes.
 
+## Version 1.7.1
+* Fixed language strings for translation.
+
 ## Version 1.7
 * Removed Fordson theme requirement so that this can be used with Fordson, Rebel, or any other theme that integrates it properly.  
 

@@ -160,7 +160,9 @@ class enrol_easy_plugin extends enrol_plugin {
             $code = $code->enrolmentcode;
         }
 
-        $codetext = $mform->addElement('text', 'course_' . $COURSE->id, 'Course: ' . $COURSE->fullname, array('readonly' => ''));
+        $coursetext = get_string('coursetext', 'enrol_easy');
+
+        $codetext = $mform->addElement('text', 'course_' . $COURSE->id, $coursetext . $COURSE->fullname, array('readonly' => ''));
         $mform->setType('course_' . $COURSE->id, PARAM_NOTAGS);
         $mform->setDefault('course_' . $COURSE->id,  $code);
         $mform->updateElementAttr('course_' . $COURSE->id, array('data-type' => 'enroleasycode')); // For whatever reason it refuses to set a class, so data attr it is.
@@ -203,7 +205,9 @@ class enrol_easy_plugin extends enrol_plugin {
                 $code = $code->enrolmentcode;
             }
 
-            $codetext = $mform->addElement('text', 'group_' . $group->id, 'Group: ' . $group->name, array('readonly' => '', 'value' => $code));
+            $grouptext = get_string('grouptext', 'enrol_easy');
+
+            $codetext = $mform->addElement('text', 'group_' . $group->id, $grouptext . $group->name, array('readonly' => '', 'value' => $code));
             $mform->setType('group_' . $group->id, PARAM_NOTAGS);
             $mform->setDefault('group_' . $group->id,  $code);
             $mform->updateElementAttr('group_' . $group->id, array('data-type' => 'enroleasycode')); // For whatever reason it refuses to set a class, so data attr it is.

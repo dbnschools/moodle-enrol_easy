@@ -62,3 +62,6 @@ $string['error_disabled_global'] = 'Easy enrollment is disabled for this course.
 $string['error_enrolstartdate'] = 'Enrollment has not begin for this course yet.';
 $string['error_enrolenddate'] = 'Enrollment for this course has ended.';
 $string['error_invalid_code'] = 'Invalid enrollment code.';
+
+$string['coursetext'] = 'Course:  ';
+$string['grouptext'] = 'Group:  ';
