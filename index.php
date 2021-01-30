@@ -36,6 +36,17 @@ if (!enrol_is_enabled('easy')) {
     die(get_string('error_disabled_global', 'enrol_easy'));
 }
 
+$plugin = enrol_get_plugin('easy');
+if (!$plugin->is_precondition_satisfied()) {
+    echo $OUTPUT->header();
+    $badge = new \core_badges\badge($plugin->get_config('precondition'));
+    $badgename = $badge->name;
+    echo get_string('error_failing_precondition', 'enrol_easy', $badgename);
+    echo $OUTPUT->footer();
+    exit;
+}
+
+
 $mform = new enrolform();
 
 if ($mform->get_data()) {
@@ -53,8 +64,6 @@ if ($mform->get_data()) {
         $instance = $DB->get_record('enrol', array('courseid'=>$course->course_id, 'enrol'=>'easy'), '*', MUST_EXIST);
 
         if ($course) {
-
-            $plugin = enrol_get_plugin('easy');
 
             if ($instance->status == 1) {
                 echo $OUTPUT->header();

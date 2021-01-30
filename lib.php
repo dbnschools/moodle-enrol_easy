@@ -32,6 +32,10 @@ class enrol_easy_plugin extends enrol_plugin {
             return '';
         }
 
+        if (!$this->is_precondition_satisfied()) {
+            return '';
+        }
+
         require_once(dirname(__FILE__) . '/locallib.php');
 
         $enrol_easy_qr = new moodle_url('/enrol/easy/qr.php');
@@ -334,6 +338,31 @@ class enrol_easy_plugin extends enrol_plugin {
     
         parent::enrol_course_delete($course);
 
+    }
+
+    /**
+     * Check whether the current user can show the required badge (if specified).
+     */
+    public function is_precondition_satisfied() : bool {
+        global $USER, $CFG;
+        require_once($CFG->libdir . '/badgeslib.php');
+
+        $precondition = $this->get_config('precondition', '');
+        if (empty($precondition)) {
+            // No precondition, therefore the check passes.
+            return true;
+        }
+
+        // Get all badges that have been awarded to the user in order to check the precondition.
+        $badges = badges_get_user_badges($USER->id);
+        foreach ($badges as $key => $badge) {
+            if ($badge->id == $precondition) {
+                return true;
+            }
+        }
+
+        // User could not show the required badge.
+        return false;
     }
 
 }

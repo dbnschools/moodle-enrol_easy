@@ -41,4 +41,13 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('enrol_easy/showqronmobile',
         get_string('showqronmobile', 'enrol_easy'), get_string('showqronmobiledesc', 'enrol_easy'), 0));
 
+    $preconditionchoices = ['' => get_string('no_precondition', 'enrol_easy')];
+    $records = $DB->get_records_sql('SELECT b.id, b.name FROM {badge} b ORDER BY b.id ASC');
+    foreach ($records as $r) {
+        $preconditionchoices[$r->id] = $r->name;
+    }
+
+    $settings->add(new admin_setting_configselect('enrol_easy/precondition',
+        get_string('precondition', 'enrol_easy'), get_string('preconditiondesc', 'enrol_easy'), '', $preconditionchoices));
+
 }

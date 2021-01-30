@@ -50,6 +50,10 @@ $string['qrenableddesc'] = 'Enable Enrol via QR Codes';
 $string['showqronmobile'] = 'Enable QR Code Reader on Mobile';
 $string['showqronmobiledesc'] = 'Enable Enrol via QR Codes on mobile devices. May not work on all mobile browsers.  Preferred use of QR codes is in the Chrome browser and on a desktop, laptop, or Chromebook.';
 
+$string['precondition'] = 'Require this badge prior to enrolment';
+$string['preconditiondesc'] = 'Prevent students from enrolling unless they can show the specified badge. Leave empty if students should always be allowed to enrol. Changing this setting will not remove prior enrolments.';
+$string['no_precondition'] = '(none required)';
+
 $string['easy:unenrolself'] = 'Unenroll from course';
 $string['easy:config'] = 'Configure Easy Enrollment instances';
 $string['easy:delete'] = 'Delete Easy Enrollment instances';
@@ -62,6 +66,7 @@ $string['error_disabled_global'] = 'Easy enrollment is disabled for this course.
 $string['error_enrolstartdate'] = 'Enrollment has not begin for this course yet.';
 $string['error_enrolenddate'] = 'Enrollment for this course has ended.';
 $string['error_invalid_code'] = 'Invalid enrollment code.';
+$string['error_failing_precondition'] = 'You are not allowed to enrol until you can show the "{$a}" badge.';
 
 $string['coursetext'] = 'Course:  ';
 $string['grouptext'] = 'Group:  ';
