@@ -1,0 +1,21 @@
+<div class="easyenrol">
+<form id="enrolform_easy" class="form-inline enrolform_easy text-xs-center" action="{{ pages.enrol_easy }}" method="post">
+    <div class="form-group">
+        <label class="sr-only" for="enrolform_course_code">{{ lang.enrolform_course_code }}</label>
+        <div class="input-group">
+            {{#config.qrenabled}}
+                <div style="cursor: pointer;" class="btn btn-secondary input-group-addon qr-button" data-url="{{ pages.enrol_easy_qr }}"><i class="fa fa-qrcode" aria-hidden="true"></i></div>
+            {{/config.qrenabled}}
+            <input type="text" class="form-control" id="enrolform_course_code" name="enrolform_course_code" placeholder="{{ lang.enrolform_course_code }}">
+        </div>
+    </div>
+    <input type="hidden" name="sesskey" value="{{ internal.sesskey }}">
+    <input type="hidden" name="_qf__enrolform" value="1">
+    <button type="submit" class="btn btn-primary">{{ lang.enrolform_submit }}</button>
+</form>
+</div>
+{{#config.qrenabled}}
+
+<script src="{{ component.jquery }}"></script>
+{{/config.qrenabled}}
+<script src="{{ component.main_javascript }}"></script>
