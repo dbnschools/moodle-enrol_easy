@@ -65,3 +65,28 @@ $string['error_invalid_code'] = 'Invalid enrollment code.';
 
 $string['coursetext'] = 'Course:  ';
 $string['grouptext'] = 'Group:  ';
+
+$string['sendexpirynotificationstask'] = 'Easy enrollment expiration notification task';
+
+$string['expirymessageenrollersubject'] = 'Easy enrolment expiry notification';
+$string['expirymessageenrollerbody'] = 'Easy enrolment in the course \'{$a->course}\' will expire within the next {$a->threshold} for the following users:
+
+{$a->users}
+
+To extend their enrolment, go to {$a->extendurl}';
+$string['expirymessageenrolledsubject'] = 'Easy enrolment expiry notification';
+$string['expirymessageenrolledbody'] = 'Dear {$a->user},
+
+This is a notification that your enrolment in the course \'{$a->course}\' is due to expire on {$a->timeend}.
+
+If you need help, please contact {$a->enroller}.';
+
+$string['customwelcomemessage'] = 'Custom welcome message';
+$string['customwelcomemessage_help'] = 'A custom welcome message may be added as plain text or Moodle-auto format, including HTML tags and multi-lang tags.
+
+The following placeholders may be included in the message:
+
+* Course name {$a->coursename}
+* Link to user\'s profile page {$a->profileurl}
+* User email {$a->email}
+* User fullname {$a->fullname}';

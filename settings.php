@@ -40,5 +40,11 @@ if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_configcheckbox('enrol_easy/showqronmobile',
         get_string('showqronmobile', 'enrol_easy'), get_string('showqronmobiledesc', 'enrol_easy'), 0));
+    
+    $options = array();
+    for ($i=0; $i<24; $i++) {
+        $options[$i] = $i;
+    }
+    $settings->add(new admin_setting_configselect('enrol_easy/expirynotifyhour', get_string('expirynotifyhour', 'core_enrol'), '', 6, $options));
 
 }

@@ -21,7 +21,6 @@
  * @copyright 2017 Dearborn Public Schools
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once(dirname(__FILE__) . '/locallib.php');
 
@@ -49,8 +48,8 @@ if ($mform->get_data()) {
     if ($course && $course->course_id) {
 
         //$context = context_course::instance($course->instance_id);
-        $studentrole = $DB->get_record('role', array('shortname'=>'student'));
-        $instance = $DB->get_record('enrol', array('courseid'=>$course->course_id, 'enrol'=>'easy'), '*', MUST_EXIST);
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $instance = $DB->get_record('enrol', array('courseid' => $course->course_id, 'enrol' => 'easy'), '*', MUST_EXIST);
 
         if ($course) {
 
@@ -82,31 +81,39 @@ if ($mform->get_data()) {
                 exit;
             }
 
-            $plugin->enrol_user($instance, $USER->id, $studentrole->id);
+            $timestart = time();
+            if ($instance->enrolperiod) {
+                $timeend = $timestart + $instance->enrolperiod;
+            } else {
+                $timeend = 0;
+            }
+
+            $plugin->enrol_user($instance, $USER->id, $studentrole->id, $timestart, $timeend);
 
             if ($course->group_id) {
                 require_once($CFG->dirroot . '/group/lib.php');
                 groups_add_member($course->group_id, $USER->id);
             }
 
-            redirect(new moodle_url('/course/view.php', array('id'=>$course->course_id)));
-            exit;
+            // Send welcome message.
+            if ($instance->customint4 != ENROL_DO_NOT_SEND_EMAIL) {
+                $plugin->email_welcome_message($instance, $USER);
+            }
 
+            redirect(new moodle_url('/course/view.php', array('id' => $course->course_id)));
+            exit;
         }
-    }
-    else {
+    } else {
         echo $OUTPUT->header();
         echo get_string('error_invalid_code', 'enrol_easy');
         $mform->display();
         echo $OUTPUT->footer();
         exit;
     }
-
 } else {
 
     echo $OUTPUT->header();
     $mform->display();
     echo $OUTPUT->footer();
-
 }
 
