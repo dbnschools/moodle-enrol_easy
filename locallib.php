@@ -33,6 +33,9 @@ class enrolform extends moodleform {
 
         $mform = $this->_form;
 
+        
+
+
         $mform->addElement('text', 'enrolform_course_code', get_string('enrolform_course_code', 'enrol_easy'));
         $mform->setType('enrolform_course_code', PARAM_NOTAGS);
 
@@ -41,4 +44,6 @@ class enrolform extends moodleform {
     function validation($data, $files) {
         return array();
     }
+
+
 }

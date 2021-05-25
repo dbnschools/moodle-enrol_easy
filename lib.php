@@ -129,6 +129,10 @@ class enrol_easy_plugin extends enrol_plugin {
         $mform->setType('enrolenddate', PARAM_NOTAGS);
         $mform->setDefault('enrolenddate', 0);
         $mform->addHelpButton('enrolenddate', 'enrolenddate', 'enrol_easy');
+        
+                
+        $roles = $this->extend_assignable_roles($context, $instance->roleid);
+        $mform->addElement('select', 'roleid', get_string('role', 'enrol_auto'), $roles);
 
         $mform->addElement('select', 'customint4', get_string('sendcoursewelcomemessage', 'enrol_self'),
         enrol_send_welcome_email_options());
@@ -173,9 +177,7 @@ class enrol_easy_plugin extends enrol_plugin {
             $code = $code->enrolmentcode;
         }
 
-        $coursetext = get_string('coursetext', 'enrol_easy');
-
-        $codetext = $mform->addElement('text', 'course_' . $COURSE->id, $coursetext . $COURSE->fullname, array('readonly' => ''));
+        $codetext = $mform->addElement('text', 'course_' . $COURSE->id, 'Course: ' . $COURSE->fullname, array('readonly' => ''));
         $mform->setType('course_' . $COURSE->id, PARAM_NOTAGS);
         $mform->setDefault('course_' . $COURSE->id, $code);
         $mform->updateElementAttr('course_' . $COURSE->id, array('data-type' => 'enroleasycode')); // For whatever reason it refuses to set a class, so data attr it is.
@@ -216,9 +218,7 @@ class enrol_easy_plugin extends enrol_plugin {
                 $code = $code->enrolmentcode;
             }
 
-            $grouptext = get_string('grouptext', 'enrol_easy');
-
-            $codetext = $mform->addElement('text', 'group_' . $group->id, $grouptext . $group->name, array('readonly' => '', 'value' => $code));
+            $codetext = $mform->addElement('text', 'group_' . $group->id, 'Group: ' . $group->name, array('readonly' => '', 'value' => $code));
             $mform->setType('group_' . $group->id, PARAM_NOTAGS);
             $mform->setDefault('group_' . $group->id, $code);
             $mform->updateElementAttr('group_' . $group->id, array('data-type' => 'enroleasycode')); // For whatever reason it refuses to set a class, so data attr it is.
@@ -355,6 +355,34 @@ class enrol_easy_plugin extends enrol_plugin {
         $enrolmentcodes = $DB->delete_records('enrol_easy', array('course_id' => $course->id));
 
         parent::enrol_course_delete($course);
+    }
+
+    public function enrol_page_hook(stdClass $instance) {
+        global $CFG, $OUTPUT, $USER;
+        $plugin = enrol_get_plugin('easy');
+        if ($plugin && !isguestuser()) {
+            return $plugin->get_form();
+        }
+    }
+    
+        
+        /**
+     * Gets a list of roles that this user can assign for the course as the default for auto-enrolment.
+     *
+     * @param context $context the context.
+     * @param integer $defaultrole the id of the role that is set as the default for auto-enrolment
+     * @return array index is the role id, value is the role name
+     */
+    protected function extend_assignable_roles($context, $defaultrole) {
+        global $DB;
+
+        $roles = get_assignable_roles($context, ROLENAME_BOTH);
+        if (!isset($roles[$defaultrole])) {
+            if ($role = $DB->get_record('role', array('id' => $defaultrole))) {
+                $roles[$defaultrole] = role_get_name($role, $context, ROLENAME_BOTH);
+            }
+        }
+        return $roles;
     }
 
         /**

@@ -41,6 +41,14 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('enrol_easy/showqronmobile',
         get_string('showqronmobile', 'enrol_easy'), get_string('showqronmobiledesc', 'enrol_easy'), 0));
     
+        if (!during_initial_install()) {
+        $options = get_default_enrol_roles(context_system::instance());
+        $student = get_archetype_roles('student');
+        $student = reset($student);
+        $settings->add(new admin_setting_configselect('enrol_easy/roleid',
+            get_string('defaultrole', 'enrol_easy'), get_string('defaultrole_desc', 'enrol_easy'), $student->id, $options));
+    }
+
     $options = array();
     for ($i=0; $i<24; $i++) {
         $options[$i] = $i;
