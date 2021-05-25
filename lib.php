@@ -129,10 +129,6 @@ class enrol_easy_plugin extends enrol_plugin {
         $mform->setType('enrolenddate', PARAM_NOTAGS);
         $mform->setDefault('enrolenddate', 0);
         $mform->addHelpButton('enrolenddate', 'enrolenddate', 'enrol_easy');
-        
-                
-        $roles = $this->extend_assignable_roles($context, $instance->roleid);
-        $mform->addElement('select', 'roleid', get_string('role', 'core'), $roles);
 
         $mform->addElement('select', 'customint4', get_string('sendcoursewelcomemessage', 'enrol_self'),
         enrol_send_welcome_email_options());
