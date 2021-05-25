@@ -15,18 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Allows course enrolment via a simple text code.
- *
+ * Task definition for enrol_easy.
  * @package   enrol_easy
- * @copyright 2017 Dearborn Public Schools
+ * @author    Lukas Celinak <lukascelinak@gmail.com>
+ * @copyright  2021 Lukas Celinak
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2021052500;
-$plugin->release  = 'v 1.7.2';
-$plugin->requires  = 2018051700;
-$plugin->cron      = 0;
-$plugin->component = 'enrol_easy';
-$plugin->maturity  = MATURITY_STABLE;
+$tasks = array(
+       array(
+        'classname' => '\enrol_easy\task\send_expiry_notifications',
+        'blocking' => 0,
+        'minute' => '*/1',
+        'hour' => '*',
+        'day' => '*',
+        'month' => '*',
+        'dayofweek' => '*',
+        'disabled' => 0
+    )
+);
+

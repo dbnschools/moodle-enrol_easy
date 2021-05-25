@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -21,8 +22,6 @@
  * @copyright 2017 Dearborn Public Schools
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 class enrol_easy_plugin extends enrol_plugin {
 
     public function get_form() {
@@ -38,7 +37,6 @@ class enrol_easy_plugin extends enrol_plugin {
         $enrol_easy_qr = str_replace("http://", "https://", $enrol_easy_qr);
 
         $data = array(
-
             'internal' => array(
                 'sesskey' => $USER->sesskey
             ),
@@ -49,7 +47,6 @@ class enrol_easy_plugin extends enrol_plugin {
             'component' => array(
                 'main_javascript' => new moodle_url('/enrol/easy/js/enrol_easy.js'),
                 'jquery' => new moodle_url('/enrol/easy/js/jquery-3.2.0.min.js'),
-  
             ),
             'config' => array(
                 'qrenabled' => $this->get_config('qrenabled') && ($this->get_config('showqronmobile') || !isMobile()),
@@ -58,11 +55,9 @@ class enrol_easy_plugin extends enrol_plugin {
                 'enrolform_course_code' => get_string('enrolform_course_code', 'enrol_easy'),
                 'enrolform_submit' => get_string('enrolform_submit', 'enrol_easy')
             ),
-
         );
 
         return $OUTPUT->render_from_template('enrol_easy/form', $data);
-
     }
 
     public function use_standard_editing_ui() {
@@ -74,7 +69,7 @@ class enrol_easy_plugin extends enrol_plugin {
 
         $context = context_course::instance($courseid, MUST_EXIST);
 
-        if (!has_capability('moodle/course:enrolconfig', $context) or !has_capability('enrol/easy:config', $context)) {
+        if (!has_capability('moodle/course:enrolconfig', $context) or!has_capability('enrol/easy:config', $context)) {
             return false;
         }
 
@@ -110,6 +105,19 @@ class enrol_easy_plugin extends enrol_plugin {
         $mform->setDefault('status', $this->get_config('status', 'enrol_easy'));
         $mform->addHelpButton('status', 'status', 'enrol_easy');
 
+        $options = array('optional' => true, 'defaultunit' => 86400);
+        $mform->addElement('duration', 'enrolperiod', get_string('enrolperiod', 'enrol_self'), $options);
+        $mform->addHelpButton('enrolperiod', 'enrolperiod', 'enrol_self');
+
+        $options = $this->get_expirynotify_options();
+        $mform->addElement('select', 'expirynotify', get_string('expirynotify', 'core_enrol'), $options);
+        $mform->addHelpButton('expirynotify', 'expirynotify', 'core_enrol');
+
+        $options = array('optional' => false, 'defaultunit' => 86400);
+        $mform->addElement('duration', 'expirythreshold', get_string('expirythreshold', 'core_enrol'), $options);
+        $mform->addHelpButton('expirythreshold', 'expirythreshold', 'core_enrol');
+        $mform->disabledIf('expirythreshold', 'expirynotify', 'eq', 0);
+
         $options = array('optional' => true);
         $mform->addElement('date_time_selector', 'enrolstartdate', get_string('enrolstartdate', 'enrol_easy'), $options);
         $mform->setType('enrolstartdate', PARAM_NOTAGS);
@@ -122,12 +130,20 @@ class enrol_easy_plugin extends enrol_plugin {
         $mform->setDefault('enrolenddate', 0);
         $mform->addHelpButton('enrolenddate', 'enrolenddate', 'enrol_easy');
 
+        $mform->addElement('select', 'customint4', get_string('sendcoursewelcomemessage', 'enrol_self'),
+        enrol_send_welcome_email_options());
+        $mform->addHelpButton('customint4', 'sendcoursewelcomemessage', 'enrol_self');
+        
+        $options = array('cols' => '60', 'rows' => '8');
+        $mform->addElement('textarea', 'customtext1', get_string('customwelcomemessage', 'enrol_easy'), $options);
+        $mform->addHelpButton('customtext1', 'customwelcomemessage', 'enrol_easy');
+
         $mform->addElement('header', 'nameforyourheaderelement', get_string('header_coursecodes', 'enrol_easy'));
 
         $allcodesobj = $DB->get_records('enrol_easy');
         $allcodes = array();
 
-        foreach($allcodesobj as $c) {
+        foreach ($allcodesobj as $c) {
             $allcodes[] = $c;
         }
 
@@ -136,8 +152,7 @@ class enrol_easy_plugin extends enrol_plugin {
         if ($code && (count($code) > 1)) {
             $DB->delete_records('enrol_easy', array('course_id' => $COURSE->id, 'group_id' => null));
             $code = NULL;
-        }
-        else {
+        } else {
             $code = array_pop($code);
         }
 
@@ -154,17 +169,13 @@ class enrol_easy_plugin extends enrol_plugin {
             $DB->insert_record('enrol_easy', $dataobj);
 
             $allcodes[] = $code;
-
-        }
-        else {
+        } else {
             $code = $code->enrolmentcode;
         }
 
-        $coursetext = get_string('coursetext', 'enrol_easy');
-
-        $codetext = $mform->addElement('text', 'course_' . $COURSE->id, $coursetext . $COURSE->fullname, array('readonly' => ''));
+        $codetext = $mform->addElement('text', 'course_' . $COURSE->id, 'Course: ' . $COURSE->fullname, array('readonly' => ''));
         $mform->setType('course_' . $COURSE->id, PARAM_NOTAGS);
-        $mform->setDefault('course_' . $COURSE->id,  $code);
+        $mform->setDefault('course_' . $COURSE->id, $code);
         $mform->updateElementAttr('course_' . $COURSE->id, array('data-type' => 'enroleasycode')); // For whatever reason it refuses to set a class, so data attr it is.
         $mform->updateElementAttr('course_' . $COURSE->id, array('data-coursename' => $COURSE->fullname));
 
@@ -177,8 +188,7 @@ class enrol_easy_plugin extends enrol_plugin {
             if ($code && (count($code) > 1)) {
                 $DB->delete_records('enrol_easy', array('course_id' => $COURSE->id, 'group_id' => $group->id));
                 $code = NULL;
-            }
-            else {
+            } else {
                 $code = array_pop($code);
             }
 
@@ -200,20 +210,16 @@ class enrol_easy_plugin extends enrol_plugin {
                 $dataobj->enrolmentcode = $code;
                 $DB->insert_record('enrol_easy', $dataobj);
                 $allcodes[] = $code;
-            }
-            else {
+            } else {
                 $code = $code->enrolmentcode;
             }
 
-            $grouptext = get_string('grouptext', 'enrol_easy');
-
-            $codetext = $mform->addElement('text', 'group_' . $group->id, $grouptext . $group->name, array('readonly' => '', 'value' => $code));
+            $codetext = $mform->addElement('text', 'group_' . $group->id, 'Group: ' . $group->name, array('readonly' => '', 'value' => $code));
             $mform->setType('group_' . $group->id, PARAM_NOTAGS);
-            $mform->setDefault('group_' . $group->id,  $code);
+            $mform->setDefault('group_' . $group->id, $code);
             $mform->updateElementAttr('group_' . $group->id, array('data-type' => 'enroleasycode')); // For whatever reason it refuses to set a class, so data attr it is.
             $mform->updateElementAttr('group_' . $group->id, array('data-coursename' => $COURSE->fullname));
             $mform->updateElementAttr('group_' . $group->id, array('data-groupname' => $group->name));
-
         }
 
         $mform->addElement('checkbox', 'regenerate_codes', get_string('regenerate_codes', 'enrol_easy'));
@@ -232,20 +238,33 @@ class enrol_easy_plugin extends enrol_plugin {
             $mform->addElement('html', '<script src="' . $qrcode_url . '"></script>');
             $mform->addElement('html', '<script src="' . $js_url . '"></script>');
         }
-
     }
+
+    /**
+     * Return an array of valid options for the expirynotify property.
+     *
+     * @return array
+     */
+    protected function get_expirynotify_options() {
+        $options = array(0 => get_string('no'),
+            1 => get_string('expirynotifyenroller', 'enrol_self'),
+            2 => get_string('expirynotifyall', 'enrol_self'));
+        return $options;
+    }
+
     public function get_instance_defaults() {
         $fields = array();
-        
+
         return $fields;
     }
+
     public function edit_instance_validation($data, $files, $instance, $context) {
 
         $errors = array();
 
         return $errors;
-
     }
+
     public function update_instance($instance, $data) {
         global $DB;
 
@@ -254,13 +273,13 @@ class enrol_easy_plugin extends enrol_plugin {
         $allcodesobj = $DB->get_records('enrol_easy');
         $allcodes = array();
 
-        foreach($allcodesobj as $code) {
+        foreach ($allcodesobj as $code) {
             $allcodes[] = $code;
         }
 
         if ($data->regenerate_codes) {
 
-            foreach($enrolmentcodes as $enrolmentcode) {
+            foreach ($enrolmentcodes as $enrolmentcode) {
 
                 $code = randomstring(6);
 
@@ -274,9 +293,7 @@ class enrol_easy_plugin extends enrol_plugin {
 
                 $allcodes[] = $code;
                 $DB->update_record('enrol_easy', $dataobj);
-
             }
-
         }
         parent::update_instance($instance, $data);
         header('Location: ' . $data->returnurl);
@@ -288,7 +305,7 @@ class enrol_easy_plugin extends enrol_plugin {
     }
 
     protected function get_status_options() {
-        $options = array(ENROL_INSTANCE_ENABLED  => get_string('yes'),
+        $options = array(ENROL_INSTANCE_ENABLED => get_string('yes'),
             ENROL_INSTANCE_DISABLED => get_string('no'));
         return $options;
     }
@@ -304,6 +321,7 @@ class enrol_easy_plugin extends enrol_plugin {
     public function allow_manage(stdClass $instance) {
         return true;
     }
+
     public function get_user_enrolment_actions(course_enrolment_manager $manager, $ue) {
         $actions = array();
         $context = $manager->get_context();
@@ -312,11 +330,11 @@ class enrol_easy_plugin extends enrol_plugin {
         $params['ue'] = $ue->id;
         if ($this->allow_unenrol_user($instance, $ue) && has_capability("enrol/easy:unenrol", $context)) {
             $url = new moodle_url('/enrol/unenroluser.php', $params);
-            $actions[] = new user_enrolment_action(new pix_icon('t/delete', ''), get_string('unenrol', 'enrol'), $url, array('class'=>'unenrollink', 'rel'=>$ue->id));
+            $actions[] = new user_enrolment_action(new pix_icon('t/delete', ''), get_string('unenrol', 'enrol'), $url, array('class' => 'unenrollink', 'rel' => $ue->id));
         }
         if ($this->allow_manage($instance) && has_capability("enrol/easy:manage", $context)) {
             $url = new moodle_url('/enrol/editenrolment.php', $params);
-            $actions[] = new user_enrolment_action(new pix_icon('t/edit', ''), get_string('edit'), $url, array('class'=>'editenrollink', 'rel'=>$ue->id));
+            $actions[] = new user_enrolment_action(new pix_icon('t/edit', ''), get_string('edit'), $url, array('class' => 'editenrollink', 'rel' => $ue->id));
         }
         return $actions;
     }
@@ -326,14 +344,132 @@ class enrol_easy_plugin extends enrol_plugin {
         $fields = $this->get_instance_defaults();
 
         return $this->add_instance($course, $fields);
-
     }
+
     public function enrol_course_delete($course) {
 
         $enrolmentcodes = $DB->delete_records('enrol_easy', array('course_id' => $course->id));
-    
-        parent::enrol_course_delete($course);
 
+        parent::enrol_course_delete($course);
     }
 
+    public function enrol_page_hook(stdClass $instance) {
+        global $CFG, $OUTPUT, $USER;
+        $plugin = enrol_get_plugin('easy');
+        if ($plugin && !isguestuser()) {
+            return $plugin->get_form();
+        }
+    }
+    
+        
+        /**
+     * Gets a list of roles that this user can assign for the course as the default for auto-enrolment.
+     *
+     * @param context $context the context.
+     * @param integer $defaultrole the id of the role that is set as the default for auto-enrolment
+     * @return array index is the role id, value is the role name
+     */
+    protected function extend_assignable_roles($context, $defaultrole) {
+        global $DB;
+
+        $roles = get_assignable_roles($context, ROLENAME_BOTH);
+        if (!isset($roles[$defaultrole])) {
+            if ($role = $DB->get_record('role', array('id' => $defaultrole))) {
+                $roles[$defaultrole] = role_get_name($role, $context, ROLENAME_BOTH);
+            }
+        }
+        return $roles;
+    }
+
+        /**
+     * Send welcome email to specified user.
+     *
+     * @param stdClass $instance
+     * @param stdClass $user user record
+     * @return void
+     */
+    public function email_welcome_message($instance, $user) {
+        global $CFG, $DB;
+
+        $course = $DB->get_record('course', array('id'=>$instance->courseid), '*', MUST_EXIST);
+        $context = context_course::instance($course->id);
+
+        $a = new stdClass();
+        $a->coursename = format_string($course->fullname, true, array('context'=>$context));
+        $a->profileurl = "$CFG->wwwroot/user/view.php?id=$user->id&course=$course->id";
+
+        if (trim($instance->customtext1) !== '') {
+            $message = $instance->customtext1;
+            $key = array('{$a->coursename}', '{$a->profileurl}', '{$a->fullname}', '{$a->email}');
+            $value = array($a->coursename, $a->profileurl, fullname($user), $user->email);
+            $message = str_replace($key, $value, $message);
+            if (strpos($message, '<') === false) {
+                // Plain text only.
+                $messagetext = $message;
+                $messagehtml = text_to_html($messagetext, null, false, true);
+            } else {
+                // This is most probably the tag/newline soup known as FORMAT_MOODLE.
+                $messagehtml = format_text($message, FORMAT_MOODLE, array('context'=>$context, 'para'=>false, 'newlines'=>true, 'filter'=>true));
+                $messagetext = html_to_text($messagehtml);
+            }
+        } else {
+            $messagetext = get_string('welcometocoursetext', 'enrol_self', $a);
+            $messagehtml = text_to_html($messagetext, null, false, true);
+        }
+
+        $subject = get_string('welcometocourse', 'enrol_self', format_string($course->fullname, true, array('context'=>$context)));
+
+        $sendoption = $instance->customint4;
+        $contact = $this->get_welcome_email_contact($sendoption, $context);
+
+        // Directly emailing welcome message rather than using messaging.
+        email_to_user($user, $contact, $subject, $messagetext, $messagehtml);
+    }
+    
+        /**
+     * Get the "from" contact which the email will be sent from.
+     *
+     * @param int $sendoption send email from constant ENROL_SEND_EMAIL_FROM_*
+     * @param $context context where the user will be fetched
+     * @return mixed|stdClass the contact user object.
+     */
+    public function get_welcome_email_contact($sendoption, $context) {
+        global $CFG;
+
+        $contact = null;
+        // Send as the first user assigned as the course contact.
+        if ($sendoption == ENROL_SEND_EMAIL_FROM_COURSE_CONTACT) {
+            $rusers = array();
+            if (!empty($CFG->coursecontact)) {
+                $croles = explode(',', $CFG->coursecontact);
+                list($sort, $sortparams) = users_order_by_sql('u');
+                // We only use the first user.
+                $i = 0;
+                do {
+                    $allnames = get_all_user_name_fields(true, 'u');
+                    $rusers = get_role_users($croles[$i], $context, true, 'u.id,  u.confirmed, u.username, '. $allnames . ',
+                    u.email, r.sortorder, ra.id', 'r.sortorder, ra.id ASC, ' . $sort, null, '', '', '', '', $sortparams);
+                    $i++;
+                } while (empty($rusers) && !empty($croles[$i]));
+            }
+            if ($rusers) {
+                $contact = array_values($rusers)[0];
+            }
+        } else if ($sendoption == ENROL_SEND_EMAIL_FROM_KEY_HOLDER) {
+            // Send as the first user with enrol/self:holdkey capability assigned in the course.
+            list($sort) = users_order_by_sql('u');
+            $keyholders = get_users_by_capability($context, 'enrol/self:holdkey', 'u.*', $sort);
+            if (!empty($keyholders)) {
+                $contact = array_values($keyholders)[0];
+            }
+        }
+
+        // If send welcome email option is set to no reply or if none of the previous options have
+        // returned a contact send welcome message as noreplyuser.
+        if ($sendoption == ENROL_SEND_EMAIL_FROM_NOREPLY || empty($contact)) {
+            $contact = core_user::get_noreply_user();
+        }
+
+        return $contact;
+    }
 }
