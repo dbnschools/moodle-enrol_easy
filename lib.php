@@ -132,7 +132,7 @@ class enrol_easy_plugin extends enrol_plugin {
         
                 
         $roles = $this->extend_assignable_roles($context, $instance->roleid);
-        $mform->addElement('select', 'roleid', get_string('role', 'enrol_auto'), $roles);
+        $mform->addElement('select', 'roleid', get_string('role', 'core'), $roles);
 
         $mform->addElement('select', 'customint4', get_string('sendcoursewelcomemessage', 'enrol_self'),
         enrol_send_welcome_email_options());
